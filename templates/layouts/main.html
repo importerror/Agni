@@ -62,7 +62,7 @@
             <li {% if request.endpoint == 'logs' %} class="active" {% endif %}><a href="{{ url_for('logs') }}">Logs</a></li>
           </ul>
           <ul class="nav navbar-nav pull-right">
-           <!-- <li><a href="{{ url_for('register') }}">Signup</a></li> -->
+           <!-- <li class="display-inline"><a href="{{ url_for('register') }}">Signup</a></li> -->
             <li><a href="{{ url_for('login') }}">Login</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -91,7 +91,11 @@
 
   <div id="footer">
     <div class="container">
-      <p>Your Company &copy; All Rights Reserved.</p>
+      <ul>
+        <li class="display-inline">feedback: support@cisco.com</li>
+        <li class="display-inline">User Count</li>
+        <li class="display-inline">@Developed by Cisco</li>
+      </ul>
       {% block footer %}{% endblock %}
     </div>
   </div>

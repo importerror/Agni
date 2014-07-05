@@ -33,4 +33,10 @@ a {
  * Various other styles
  ****************************************************************************/
 
+.display-inline {
+	display:inline-block;
+	list-style-type: none;
+	margin-right: 200px;
+}
+
 /* Various other styles end */
