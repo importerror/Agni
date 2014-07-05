@@ -1,14 +1,67 @@
 {% extends 'layouts/main.html' %}
-{% block title %}About{% endblock %}
+{% block title %}Reserved Pages{% endblock %}
 {% block content %}
 
 <div class="page-header">
-  <h1>About Page</h1>
+  <h1>Reserved Demos are shown here</h1>
 </div>
-<p class="lead">This is just a placeholder page which should be replaced with real content.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tellus ligula, imperdiet id lobortis sit amet, scelerisque non sapien. Duis quis dui quis mauris dapibus fringilla. Pellentesque nec tellus ac diam volutpat malesuada.</p>
-<p>In quam arcu, interdum vel arcu viverra, vulputate convallis massa. Sed hendrerit velit a arcu euismod, sit amet consequat lacus imperdiet. Nullam quis dui sapien. Vestibulum placerat, justo non fringilla laoreet, dui ipsum posuere nisi, nec vestibulum eros leo ut sapien.</p>
-<p>Vivamus eu felis sed magna scelerisque semper in et libero. Curabitur sed convallis odio, quis venenatis sapien. In convallis a velit ac commodo. Donec sapien ligula, vestibulum ut nisi accumsan, facilisis pretium est. Fusce varius semper orci, et egestas nulla cursus a. Phasellus aliquam, mi ac adipiscing lobortis, ipsum augue aliquam ligula, quis fermentum mi augue vel ligula.</p>
-<p>Integer elementum malesuada dolor in aliquet.</p>
+<div>
+	<table border="1" width="300px">
+		<tr>
+			<td>
+			 	Demo Name : 
+			</td>
+			<td>	
+			<select>
+				  <option value="volvo">Volvo</option>
+				  <option value="saab">Saab</option>
+				  <option value="mercedes">Mercedes</option>
+				  <option value="audi">Audi</option>
+     		</select> 	
+			</td>
+		</tr>
+		<tr>
+			<td> Description 
+			</td>
+			<td>
+				<textarea rows="4" cols="50">
+				 This textarea will give you a brief detail of all the info of the devices 
+				 </textarea>
+			</td> 
+		</tr>
+		<tr>
+			<td>
+				Device Details 
+			</td>
+			<td>
+				<textarea rows="4" cols="50">
 
+				 this would show <IP :PORT > details 
+				</textarea> 	
+			</td>
+		<tr>
+			<td>
+				Do you want to free the Reservation ? Check yes and click submit 
+			</td>
+			<td>
+				<input type="checkbox" name="lab_reserve_status" value="Yes">Yes		
+			</td>
+		</tr>
+		</tr>
+	</table>
+</div>
+
+<div>
+		<table>
+			<tr>
+				<td>
+					<button type="submit">Submit!</button> 
+				</td>
+				<td>
+					<button type="submit">Cancel!</button> 
+				</td>
+				
+			</tr>
+		</table>
+</div>
 {% endblock %}
