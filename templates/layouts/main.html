@@ -57,9 +57,9 @@
           <ul class="nav navbar-nav">
             <li {% if request.endpoint == 'home' %} class="active" {% endif %}><a href="{{ url_for('home') }}">Home</a></li>
             <li {% if request.endpoint == 'about' %} class="active" {% endif %}><a href="{{ url_for('about') }}">About</a></li>
-            <li {% if request.endpoint == 'available' %} class="active" {% endif %}><a href="{{ url_for('about') }}">Available</a></li>
-            <li {% if request.endpoint == 'reserved' %} class="active" {% endif %}><a href="{{ url_for('about') }}">Reserved</a></li>
-            <li {% if request.endpoint == 'logs' %} class="active" {% endif %}><a href="{{ url_for('about') }}">Logs</a></li>
+            <li {% if request.endpoint == 'available' %} class="active" {% endif %}><a href="{{ url_for('available') }}">Available</a></li>
+            <li {% if request.endpoint == 'reserved' %} class="active" {% endif %}><a href="{{ url_for('reserved') }}">Reserved</a></li>
+            <li {% if request.endpoint == 'logs' %} class="active" {% endif %}><a href="{{ url_for('logs') }}">Logs</a></li>
           </ul>
           <ul class="nav navbar-nav pull-right">
            <!-- <li><a href="{{ url_for('register') }}">Signup</a></li> -->

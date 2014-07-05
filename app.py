@@ -50,6 +50,18 @@ def about():
     return render_template('pages/placeholder.about.html')
 
 
+@app.route('/available')
+def available():
+    return render_template('pages/placeholder.available.html')
+
+@app.route('/logs')
+def logs():
+    return render_template('pages/placeholder.logs.html')
+
+@app.route('/reserved')
+def reserved():
+    return render_template('pages/placeholder.reserved.html')
+
 @app.route('/login')
 def login():
     form = LoginForm(request.form)
