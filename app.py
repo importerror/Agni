@@ -5,6 +5,7 @@
 from flask import Flask, render_template, request
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
+import ldap
 from logging import Formatter, FileHandler
 from forms import *
 
@@ -79,6 +80,25 @@ def forgot():
     form = ForgotForm(request.form)
     return render_template('forms/forgot.html', form=form)
 
+@app.route('/authenticate',methods = ['GET','POST'])
+def authenticate():
+
+	username = request.form['name']
+	password = request.form['password']
+	user_dn = "uid="+username+","+app.config['LDAP_SEARCH_BASE']
+	base_dn  = "ou=people,o=cisco.com"
+	connect  = ldap.open(app.config['LDAP_HOST'])
+
+	search_filter = "uid="+username
+
+	try:
+		connect.bind_s(user_dn,password)
+		result = connect.search_s(base_dn,ldap.SCOPE_SUBTREE,search_filter)
+		return render_template('pages/placeholder.about.html')
+	except ldap.LDAPError:
+		connect.unbind_s()
+		print "authentication error"
+		return render_template('pages/placeholder.failure.html')
 # Error handlers.
 
 
