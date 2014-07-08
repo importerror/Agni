@@ -62,5 +62,15 @@
 			</td>
 		</tr>
 </table>
+<table>
+
+	 		{% for o in demo_details %}
+        <tr> 
+        <td width="300px">{{ o.demo_name }}</td>
+        <td width="100px">{{ o.description }}</td>
+        <td width="50px">{{ o.device_details }}</td>
+		</tr>
+		  {%endfor%}
+</table>
 
 {% endblock %}
