@@ -2,12 +2,15 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-from flask import Flask, render_template, request
+#from flask import Flask, render_template, request,g,session,flash
+from flask import *
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 import ldap
 from logging import Formatter, FileHandler
 from forms import *
+from functools import wraps
+import sqlite3
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -15,17 +18,27 @@ from forms import *
 
 app = Flask(__name__)
 app.config.from_object('config')
-#db = SQLAlchemy(app)
+app.config['DATABASE'] = 'Task.db'
 
-# Automatically tear down SQLAlchemy.
-'''
-@app.teardown_request
-def shutdown_session(exception=None):
-    db_session.remove()
-'''
+
+
+def connect_db():
+	return sqlite3.connect(app.config['DATABASE'])
+
+
+@app.before_request
+def before_request():
+    g.db = connect_db()
+
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('errors/404.html'),404
+
 
 # Login required decorator.
-'''
+
 def login_required(test):
     @wraps(test)
     def wrap(*args, **kwargs):
@@ -35,31 +48,42 @@ def login_required(test):
             flash('You need to login first.')
             return redirect(url_for('login'))
     return wrap
-'''
+
 #----------------------------------------------------------------------------#
 # Controllers.
 #----------------------------------------------------------------------------#
 
 
 @app.route('/')
+@login_required
 def home():
     return render_template('pages/placeholder.home.html')
 
 
 @app.route('/about')
+@login_required
 def about():
     return render_template('pages/placeholder.about.html')
 
 
 @app.route('/available')
+@login_required
 def available():
-    return render_template('pages/placeholder.available.html')
+    g.db = connect_db()
+    cur = g.db.execute('select  demo_id, demo_name , description , device_details , status , duration from demodetails  where demo_name="admin"')
+    demo_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4],duration = row[5]) for row in cur.fetchall()]
+    g.db.close()
+    return render_template('pages/placeholder.available.html', demo_details = demo_details)
+
+#    return render_template('pages/placeholder.available.html')
 
 @app.route('/logs')
+@login_required
 def logs():
     return render_template('pages/placeholder.logs.html')
 
 @app.route('/reserved')
+@login_required
 def reserved():
     return render_template('pages/placeholder.reserved.html')
 
@@ -68,32 +92,18 @@ def login():
     form = LoginForm(request.form)
     return render_template('forms/login.html', form=form)
 
-
-@app.route('/register')
-def register():
-    form = RegisterForm(request.form)
-    return render_template('forms/register.html', form=form)
-
-
-@app.route('/forgot')
-def forgot():
-    form = ForgotForm(request.form)
-    return render_template('forms/forgot.html', form=form)
-
 @app.route('/authenticate',methods = ['GET','POST'])
 def authenticate():
-
 	username = request.form['name']
 	password = request.form['password']
 	user_dn = "uid="+username+","+app.config['LDAP_SEARCH_BASE']
 	base_dn  = "ou=people,o=cisco.com"
 	connect  = ldap.open(app.config['LDAP_HOST'])
-
 	search_filter = "uid="+username
-
 	try:
 		connect.bind_s(user_dn,password)
 		result = connect.search_s(base_dn,ldap.SCOPE_SUBTREE,search_filter)
+		session['logged_in'] = True
 		return render_template('pages/placeholder.about.html')
 	except ldap.LDAPError:
 		connect.unbind_s()
