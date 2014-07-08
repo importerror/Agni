@@ -70,8 +70,8 @@ def about():
 @login_required
 def available():
     g.db = connect_db()
-    cur = g.db.execute('select  demo_id, demo_name , description , device_details , status , duration from demodetails  where demo_name="admin"')
-    demo_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4],duration = row[5]) for row in cur.fetchall()]
+    cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails')
+    demo_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4]) for row in cur.fetchall()]
     g.db.close()
     return render_template('pages/placeholder.available.html', demo_details = demo_details)
 
