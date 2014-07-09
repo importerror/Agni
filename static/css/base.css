@@ -28,6 +28,11 @@
 .hover-link:hover {
   text-decoration: underline;
 }
+
+.color-blue
+{
+  background: blue;
+}
 .tags-blue-box {
   background-color: #e0f2f6;
   padding: 5px;
