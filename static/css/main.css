@@ -4,39 +4,236 @@
  * Main stylesheet file.
  */
 
-
 /*****************************************************************************
  * Main elements
  ****************************************************************************/
-html {
-  overflow-y: scroll;
-}
-a {
-  cursor: pointer;
-}
-::selection {
-  background: #555;
-  color: #FFF;
-}
-::-moz-selection {
-  background: #555;
-  color: #FFF;
-}
-::-webkit-selection {
-  background: #555;
-  color: #FFF;
-}
-/* Main elements end */
 
+html {
+
+    overflow-y: scroll;
+
+}
+
+a {
+
+    cursor: pointer;
+
+}
+
+::selection {
+
+    background: #555;
+
+    color: #FFF;
+
+}
+
+::-moz-selection {
+
+    background: #555;
+
+    color: #FFF;
+
+}
+
+::-webkit-selection {
+
+    background: #555;
+
+    color: #FFF;
+
+}
+
+/* Main elements end */
 
 /*****************************************************************************
  * Various other styles
  ****************************************************************************/
 
-.display-inline {
-	display:inline-block;
-	list-style-type: none;
-	margin-right: 200px;
+.datagrid table {
+
+    border-collapse: collapse;
+
+    text-align: left;
+
+    width: 100%;
+
+}
+
+.datagrid {
+
+    font: normal 12px/150% Arial, Helvetica, sans-serif;
+
+    background: #fff;
+
+    overflow: hidden;
+
+    -webkit-border-radius: 8px;
+
+    -moz-border-radius: 8px;
+
+    border-radius: 8px;
+
+}
+
+.datagrid table td, .datagrid table th {
+
+    padding: 10px 8px;
+
+}
+
+.datagrid table thead th {
+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #8C8C8C), color-stop(1, #7D7D7D));
+
+    background: -moz-linear-gradient(center top, #8C8C8C 5%, #7D7D7D 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#8C8C8C', endColorstr='#7D7D7D');
+
+    background-color: #8C8C8C;
+
+    color: #FFFFFF;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    border-left: 1px solid #A3A3A3;
+
+}
+
+.datagrid table thead th:first-child {
+
+    border: none;
+
+}
+
+.datagrid table tbody td {
+
+    color: #7D7D7D;
+
+    border-left: 1px solid #DBDBDB;
+
+    font-size: 12px;
+
+    font-weight: normal;
+
+}
+
+.datagrid table tbody .alt td {
+
+    background: #EBEBEB;
+
+    color: #7D7D7D;
+
+}
+
+.datagrid table tbody td:first-child {
+
+    border-left: none;
+
+}
+
+.datagrid table tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+.datagrid table tfoot td div {
+
+    border-top: 1px solid #8C8C8C;
+
+    background: #EBEBEB;
+
+}
+
+.datagrid table tfoot td {
+
+    padding: 0;
+
+    font-size: 12px
+
+}
+
+.datagrid table tfoot td div {
+
+    padding: 2px;
+
+}
+
+.datagrid table tfoot td ul {
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+    text-align: right;
+
+}
+
+.datagrid table tfoot li {
+
+    display: inline;
+
+}
+
+.datagrid table tfoot li a {
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    padding: 2px 8px;
+
+    margin: 1px;
+
+    color: #F5F5F5;
+
+    border: 1px solid #8C8C8C;
+
+    -webkit-border-radius: 3px;
+
+    -moz-border-radius: 3px;
+
+    border-radius: 3px;
+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #8C8C8C), color-stop(1, #7D7D7D));
+
+    background: -moz-linear-gradient(center top, #8C8C8C 5%, #7D7D7D 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#8C8C8C', endColorstr='#7D7D7D');
+
+    background-color: #8C8C8C;
+
+}
+
+.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover {
+
+    text-decoration: none;
+
+    border-color: #7D7D7D;
+
+    color: #F5F5F5;
+
+    background: none;
+
+    background-color: #8C8C8C;
+
+}
+
+div.dhtmlx_window_active, div.dhx_modal_cover_dv {
+
+    position: fixed !important;
+
+}
+
+/*.display-inline {
+  display:inline-block;
+  list-style-type: none;
+  margin-right: 200px;
 }
 
 
@@ -103,93 +300,6 @@ tr:last-child td:last-child
     border-bottom-right-radius:10px;
 }
 
-table.nice-table-2 {
-  font-size: 13px;
-  width: 100%;
-  border-collapse: collapse;
-}
-table.nice-table-2 .left-row {
-  border-left: 1px solid #e5e7e8;
-}
-table.nice-table-2 .right-row {
-  border-right: 1px solid #e5e7e8;
-}
-table.nice-table-2 .top-row {
-  border-top: 1px solid #e5e7e8;
-}
-table.nice-table-2 .bottom-row {
-  border-bottom: 1px solid #e5e7e8;
-}
-table.nice-table-2 .bottom-row-dashed {
-  border-bottom: 1px dashed #e5e7e8;
-}
-table.nice-table-2 .less-highlight {
-  font-weight: 100;
-}
-table.nice-table-2 .margin-right {
-  margin-right: 2px;
-}
-table.nice-table-2 .margin-left {
-  margin-left: 2px;
-}
-table.nice-table-2 td,
-table.nice-table-2 th {
-  padding: 5px 7px;
-  padding-left: 15px;
-}
-table.nice-table-2 td.short-col {
-  width: 1%;
-}
-table.nice-table-2 td.less-medium-col {
-  width: 5%;
-}
-table.nice-table-2 td.large-col {
-  width: 20%;
-}
-table.nice-table-2 td.score-large-col {
-  width: 50%;
-}
-table.nice-table-2 td.medium-col {
-  width: 10%;
-}
-table.nice-table-2 td.sort-heading:hover {
-  cursor: pointer;
-}
-table.nice-table-2 td.rank-col {
-  min-width: 40px !important;
-}
-table.nice-table-2 td .sort,
-table.nice-table-2 td .sort-up,
-table.nice-table-2 td .sort-down {
-  margin-top: 5px;
-}
-table.nice-table-2 td .column-header {
-  width: 80%;
-  overflow: visible;
-}
-table.nice-table-2 tr.align-top {
-  vertical-align: top;
-}
-table.nice-table-2 tr.topborder {
-  border-top: 1px solid #e4e4e4;
-}
-table.nice-table-2 tbody:nth-child(1) td {
-  padding: 7px 7px;
-  padding-left: 13px;
-}
-table.nice-table-2 tr.no-border td {
-  padding-top: 0px;
-}
-table.nice-table-2 .heading {
-  -webkit-box-shadow: inset 0 1px 0 #fff;
-  -moz-box-shadow: inset 0 1px 0 #fff;
-  box-shadow: inset 0 1px 0 #fff;
-}
-html.ie8 table.nice-table-2 .heading,
-html.ie7 table.nice-table-2 .heading,
-html.ie6 table.nice-table-2 .heading {
-  border: 2px solid;
-}
-
+*/
 
 /* Various other styles end */
