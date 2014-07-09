@@ -1,35 +1,37 @@
-{% extends 'layouts/main.html' %}
-{% block title %}Log details{% endblock %}
-{% block content %}
+{% extends 'layouts/main.html' %} {% block title %}Log details{% endblock %} {% block content %}
 
 <div class="page-header">
-  <h1>Detailed view of what has been allocated</h1>
+    <h1>Detailed view of what has been allocated</h1>
 </div>
-<div>
-<table  style="width:300px"  border="1"  >
-	<tr>
-			<th> User </th>
-			<th> Demo Name  </th>
-			<th> Description </th>
-			<th> Duration </th>
-	</tr>
-<!--	<% for data in @datas %> -->
-	 	<tr> 
-			<td>
-			  Karthik
-			</td> 
-			<td>
-			 Demo Center 1
-			</td> 
-			<td> 
-			 Demo Description
-			</td> 
-			<td>
-				Duration
-			</td>
-		</tr>
-		</tr>
-		</tr>
-</table>
+<div class="datagrid">
+    <table class="datagrid" border="1" width="300px" height="100px" align="center">
+        <thead>
+            <tr style="background:#e2e5e7;" height="20px" >
+                <th>User</th>
+                <th>Demo Name</th>
+                <th>Description</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--	<% for data in @datas %> -->
+            <tr>
+                <td>
+                    Karthik
+                </td>
+                <td>
+                    Demo Center 1
+                </td>
+                <td>
+                    Demo Description
+                </td>
+                <td>
+                    Duration
+                </td>
+            </tr>
+            </tr>
+            </tr>
+        </tbody>
+    </table>
 </div>
 {% endblock %}

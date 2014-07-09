@@ -1,66 +1,67 @@
-{% extends 'layouts/main.html' %}
-{% block title %}Reserved Pages{% endblock %}
-{% block content %}
+{% extends 'layouts/main.html' %} {% block title %}Reserved Pages{% endblock %} {% block content %}
 
 <div class="page-header">
-  <h1>Reserved Demos are shown here</h1>
+    <h1>Reserved Demos are shown here</h1>
 </div>
-<div>
-	<table border="1" width="300px">
-		<tr>
-			<td>
-			 	Demo Name : 
-			</td>
-			<td>	
-			<select>
-				  <option value="volvo">Volvo</option>
-				  <option value="saab">Saab</option>
-				  <option value="mercedes">Mercedes</option>
-				  <option value="audi">Audi</option>
-     		</select> 	
-			</td>
-		</tr>
-		<tr>
-			<td> Description 
-			</td>
-			<td>
-				<textarea rows="4" cols="50">
-				 This textarea will give you a brief detail of all the info of the devices 
-				 </textarea>
-			</td> 
-		</tr>
-		<tr>
-			<td>
-				Device Details 
-			</td>
-			<td>
-				<textarea rows="4" cols="50">
 
-				 this would show <IP :PORT > details 
-				</textarea> 	
-			</td>
-		<tr>
-			<td>
-				Do you want to free the Reservation ? Check yes and click submit 
-			</td>
-			<td>
-				<input type="checkbox" name="lab_reserve_status" value="Yes">Yes		
-			</td>
-		</tr>
-		</tr>
-	</table>
+
+<div class="datagrid">
+    <table border="1" width="300px" class="datagrid">
+        <tr>
+            <td class="column-grid" style="color: #FFFFFF;">Demo Name :</td>
+            <td>
+                <select>
+                    <option value="volvo" onclick="sample()">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="column-grid" style="color: #FFFFFF;">Description
+            </td>
+            <td>
+                <textarea rows="4" cols="50">This textarea will give you a brief detail of all the info of the devices
+                </textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="column-grid" style="color: #FFFFFF;">
+                Device Details
+            </td>
+            <td>
+                <textarea rows="4" cols="50">this would show
+                    <IP :PORT>details
+                </textarea>
+            </td>
+            <tr>
+                <td class="column-grid" style="color: #FFFFFF;">
+                    Do you want to free the Reservation ? Check yes and click submit
+                </td>
+                <td>
+                    <input type="checkbox" name="lab_reserve_status" value="Yes">Yes
+                </td>
+            </tr>
+        </tr>
+    </table>
 </div>
 <div>
-		<table>
-			<tr>
-				<td>
-					<button type="submit">Submit!</button> 
-				</td>
-				<td>
-					<button type="submit">Cancel!</button> 
-				</td>
-				
-			</tr>
-		</table>
+    <table>
+        <tr>
+            <td>
+                <button type="submit">Submit!</button>
+            </td>
+            <td>
+                <button type="submit">Cancel!</button>
+            </td>
+
+        </tr>
+    </table>
 </div>
+<script type="text/javascript">
+function sample() {
+    alert("hi");
+}
+</script>
 {% endblock %}
