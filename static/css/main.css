@@ -230,13 +230,13 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv {
 
 }
 
-/*.display-inline {
+.display-inline {
   display:inline-block;
   list-style-type: none;
   margin-right: 200px;
 }
 
-
+/*
 table
 {
     border-spacing:1px;
