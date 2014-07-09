@@ -76,6 +76,26 @@ a {
 
 }
 
+.column-grid {
+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #000000), color-stop(1, #7D7D7D));
+
+    background: -moz-linear-gradient(center top, #8C8C8C 5%, #7D7D7D 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#8C8C8C', endColorstr='#7D7D7D');
+
+    background-color: #8C8C8C;
+
+    color: #FFFFFF;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    border-left: 1px solid #A3A3A3;
+
+}
+
 .datagrid table td, .datagrid table th {
 
     padding: 10px 8px;
@@ -231,9 +251,13 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv {
 }
 
 .display-inline {
-  display:inline-block;
-  list-style-type: none;
-  margin-right: 200px;
+
+    display: inline-block;
+
+    list-style-type: none;
+
+    margin-right: 200px;
+
 }
 
 /*
