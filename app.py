@@ -55,19 +55,19 @@ def login_required(test):
 
 
 @app.route('/')
-@login_required
+# @login_required
 def home():
     return render_template('pages/placeholder.home.html')
 
 
 @app.route('/about')
-@login_required
+# @login_required
 def about():
     return render_template('pages/placeholder.about.html')
 
 
 @app.route('/available')
-@login_required
+# @login_required
 def available():
     g.db = connect_db()
     cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails')
@@ -78,12 +78,12 @@ def available():
 #    return render_template('pages/placeholder.available.html')
 
 @app.route('/logs')
-@login_required
+# @login_required
 def logs():
     return render_template('pages/placeholder.logs.html')
 
 @app.route('/reserved')
-@login_required
+# @login_required
 def reserved():
     g.db = connect_db()
     cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails where status=1')
