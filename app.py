@@ -85,7 +85,11 @@ def logs():
 @app.route('/reserved')
 @login_required
 def reserved():
-    return render_template('pages/placeholder.reserved.html')
+    g.db = connect_db()
+    cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails where status=1')
+    reserve_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4]) for row in cur.fetchall()]
+    g.db.close()
+    return render_template('pages/placeholder.reserved.html', reserve_details = reserve_details )
 
 @app.route('/login')
 def login():
