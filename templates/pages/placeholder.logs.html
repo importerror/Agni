@@ -9,26 +9,31 @@
             <tr style="background:#e2e5e7;" height="20px" >
                 <th>User</th>
                 <th>Demo Name</th>
-                <th>Description</th>
-                <th>Duration</th>
+                <th>Status</th>
+                <th>Reserved Date</th>
             </tr>
         </thead>
         <tbody>
-            <!--	<% for data in @datas %> -->
+            	{% for data in lab_history_details %}
             <tr>
                 <td>
-                    Karthik
+					{{ data.userid }}
                 </td>
                 <td>
-                    Demo Center 1
+					{{ data.demoname }}
                 </td>
                 <td>
-                    Demo Description
+					{% if(data.status ==1)%}
+						Reserved 
+					{% else %}
+						Availble
+					{%endif%}
                 </td>
                 <td>
-                    Duration
+					{{ data.booked_time }}
                 </td>
             </tr>
+			{%endfor %}
             </tr>
             </tr>
         </tbody>
