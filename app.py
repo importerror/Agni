@@ -69,23 +69,31 @@ def about():
 @app.route('/available')
 # @login_required
 def available():
-    g.db = connect_db()
-    cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails')
-    demo_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4]) for row in cur.fetchall()]
-    g.db.close()
-    return render_template('pages/placeholder.available.html', demo_details = demo_details)
+   # g.db = connect_db()
+   # cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails')
+   # demo_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4]) for row in cur.fetchall()]
+   # g.db.close()
+    return render_template('pages/placeholder.available.html', demo_details = {})
 
 #    return render_template('pages/placeholder.available.html')
 
 @app.route('/logs')
 # @login_required
 def logs():
-    return render_template('pages/placeholder.logs.html')
+    g.db = connect_db()
+    cur  = g.db.execute('select userid,demoname,booked_time,status from lab_history')
+    lab_history_details = [dict(userid=row[0],demoname=row[1],booked_time =row[2],status=row[3]) for row in cur.fetchall()]
+    g.db.close()
+    return render_template('pages/placeholder.logs.html',lab_history_details = lab_history_details)
 
 @app.route('/reserved')
 # @login_required
 def reserved():
-    return render_template('pages/placeholder.reserved.html')
+    g.db = connect_db()
+    cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails where status=1')
+    reserve_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4]) for row in cur.fetchall()]
+    g.db.close()
+    return render_template('pages/placeholder.reserved.html', reserve_details = reserve_details )
 
 @app.route('/login')
 def login():
@@ -104,7 +112,7 @@ def authenticate():
 		connect.bind_s(user_dn,password)
 		result = connect.search_s(base_dn,ldap.SCOPE_SUBTREE,search_filter)
 		session['logged_in'] = True
-		return render_template('pages/placeholder.about.html')
+		return render_template('pages/placeholder.home.html')
 	except ldap.LDAPError:
 		connect.unbind_s()
 		print "authentication error"
