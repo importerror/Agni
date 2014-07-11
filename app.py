@@ -46,7 +46,7 @@ def login_required(test):
             return test(*args, **kwargs)
         else:
             flash('You need to login first.')
-            return redirect(url_for('login'))
+            return redirect(url_for('login',session=session) )
     return wrap
 
 #----------------------------------------------------------------------------#
@@ -55,45 +55,50 @@ def login_required(test):
 
 
 @app.route('/')
-# @login_required
+@login_required
 def home():
-    return render_template('pages/placeholder.home.html')
+    return render_template('pages/placeholder.home.html',session_status = {'session_status':"true"})
 
+
+@app.route('/logout')
+def logout():
+    flash('You have been logged out successfully')
+    session.pop('logged_in', None)
+    return redirect(url_for('login',session_status = {'session_status':"false"}))
 
 @app.route('/about')
-# @login_required
+@login_required
 def about():
-    return render_template('pages/placeholder.about.html')
+    return render_template('pages/placeholder.about.html',session_status = {'session_status':"true"})
 
 
 @app.route('/available')
-# @login_required
+@login_required
 def available():
    # g.db = connect_db()
    # cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails')
    # demo_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4]) for row in cur.fetchall()]
    # g.db.close()
-    return render_template('pages/placeholder.available.html', demo_details = {})
+    return render_template('pages/placeholder.available.html', demo_details = {},session_status = {'session_status':"true"})
 
-#    return render_template('pages/placeholder.available.html')
 
 @app.route('/logs')
-# @login_required
+@login_required
 def logs():
     g.db = connect_db()
     cur  = g.db.execute('select userid,demoname,booked_time,status from lab_history')
     lab_history_details = [dict(userid=row[0],demoname=row[1],booked_time =row[2],status=row[3]) for row in cur.fetchall()]
     g.db.close()
-    return render_template('pages/placeholder.logs.html',lab_history_details = lab_history_details)
+    return render_template('pages/placeholder.logs.html',lab_history_details = lab_history_details,session_status={'session_status':'true'})
 
 @app.route('/reserved')
-# @login_required
+@login_required
 def reserved():
     g.db = connect_db()
     cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails where status=1')
     reserve_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4]) for row in cur.fetchall()]
     g.db.close()
-    return render_template('pages/placeholder.reserved.html', reserve_details = reserve_details )
+    return render_template('pages/placeholder.reserved.html', reserve_details = reserve_details,session_status = {'session_status':"true"} )
 
 @app.route('/login')
 def login():
@@ -112,11 +117,11 @@ def authenticate():
 		connect.bind_s(user_dn,password)
 		result = connect.search_s(base_dn,ldap.SCOPE_SUBTREE,search_filter)
 		session['logged_in'] = True
-		return render_template('pages/placeholder.home.html')
+		return render_template('pages/placeholder.home.html', session_status = {'session_status':"true"})
 	except ldap.LDAPError:
 		connect.unbind_s()
-		print "authentication error"
-		return render_template('pages/placeholder.failure.html')
+		flash('Incorrect UserName/Password')
+		return redirect(url_for('login'))
 # Error handlers.
 
 
