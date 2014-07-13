@@ -76,12 +76,12 @@
  <script type=text/javascript>
  $(document).ready(function() {
    $("#selectoption").change(function() {
-   	alert(1);
    	 selectIndex = document.getElementById('selectoption').selectedIndex ;
         selectedValue = document.getElementById('selectoption').options[selectIndex].value;
+		alert(selectedValue);
         $.ajax({
            type: "GET",
-           url: $SCRIPT_ROOT + "/_update_reserved_demo/",
+           url:"/_update_reserved_demo/",
            contentType: "application/xml; charset=utf-8",
            data: { echoValue:selectedValue },
            success: function(data) {
