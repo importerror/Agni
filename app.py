@@ -122,13 +122,13 @@ def authenticate():
 		return redirect(url_for('login'))
 
 
-@app.route('/_update_reserved_demo')
+@app.route('/_update_reserved_demo',methods = ['GET','POST'])
 def update_reserved_demo():
+ 	print "ho"
    	demoname = request.args.get('demoname')
 	g.db = connect_db()
 	cur = g.db.excute('select demoid,demoname,description,device_details,status from demodetails where demoname= ?',[demoname])
 	demo_sepcific_detail = [dict(demo_id=row[0],demo_name=row[1],description=row[2],status=row[4]) for row in cur.fetchall()]
-	print 'hello'
 	return jsonify(demo_specific_detail)
 
 
@@ -138,12 +138,12 @@ def update_reserved_demo():
 @app.errorhandler(500)
 def internal_error(error):
     #db_session.rollback()
-    return render_template('errors/500.html'), 500
+    return render_template('errors/500.html',session_status = {'session_status':"true"}), 500
 
 
 @app.errorhandler(404)
 def not_found_error(error):
-    return render_template('errors/404.html'), 404
+    return render_template('errors/404.html',session_status = {'session_status':"true"}), 404
 
 if not app.debug:
     file_handler = FileHandler('error.log')
