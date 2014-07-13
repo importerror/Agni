@@ -57,7 +57,7 @@
 					<button type="submit">Reserved !</button> 
 			</td>
 			<td>
-				A calender widget needs to come here , date and time ,and shall reserve the database for an hour 	
+                <input id="datetimepicker" type="text" >
 			</td>
 		</tr>
 </table>
@@ -74,6 +74,8 @@
 </table>
 
  <script type=text/javascript>
+
+jQuery('#datetimepicker').datetimepicker();
  $(document).ready(function() {
    $("#selectoption").change(function() {
    	 selectIndex = document.getElementById('selectoption').selectedIndex ;
