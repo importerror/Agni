@@ -2,9 +2,7 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-#from flask import Flask, render_template, request,g,session,flash
 from flask import *
-# from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 import ldap
 from logging import Formatter, FileHandler
@@ -75,11 +73,11 @@ def about():
 @app.route('/available')
 @login_required
 def available():
-   # g.db = connect_db()
-   # cur = g.db.execute('select  demoid, demoname , description , device_details , status from demodetails')
-   # demo_details= [dict(demo_id=row[0], demo_name=row[1], description=row[2], device_details=row[3],status=row[4]) for row in cur.fetchall()]
-   # g.db.close()
-    return render_template('pages/placeholder.available.html', demo_details = {},session_status = {'session_status':"true"})
+    g.db = connect_db()
+    cur = g.db.execute('select demoname from demodetails')
+    demo_details_names= [dict(demo_name=row[0]) for row in cur.fetchall()]
+    g.db.close()
+    return render_template('pages/placeholder.available.html', demo_details_names = demo_details_names ,session_status = {'session_status':"true"})
 
 
 @app.route('/logs')
@@ -122,6 +120,18 @@ def authenticate():
 		connect.unbind_s()
 		flash('Incorrect UserName/Password')
 		return redirect(url_for('login'))
+
+
+@app.route('/_update_reserved_demo')
+def update_reserved_demo():
+   	demoname = request.args.get('demoname')
+	g.db = connect_db()
+	cur = g.db.excute('select demoid,demoname,description,device_details,status from demodetails where demoname= ?',[demoname])
+	demo_sepcific_detail = [dict(demo_id=row[0],demo_name=row[1],description=row[2],status=row[4]) for row in cur.fetchall()]
+	print 'hello'
+	return jsonify(demo_specific_detail)
+
+
 # Error handlers.
 
 

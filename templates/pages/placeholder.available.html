@@ -1,7 +1,48 @@
 {% extends 'layouts/main.html' %}
 {% block title %}Availble Resources{% endblock %}
 {% block content %}
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{{
+  url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+<!-- <script type=text/javascript>
+    $(function() {
+      $("#select_an_option").bind('onchange', function() {
+	  alert(0);
+    var selectIndex = document.getElementById('select_an_option').selectedIndex ;
+    var selectedValue = document.getElementById('select_an_option').options[selectIndex].value;
+    alert(1);
+        $.getJSON('/_update_reserved_demo', {
+		myvalue: selectedValue  
+        }, function(data) {
+//        $("#result").text(data.result);
+			alert("success");
+        });
+        return false;
+      });
+    });
+  </script>   --> 
+ <script type=text/javascript>
+ $(function() {
+    $("#selectoption").onchange(function() {
+ 		alert(1);
+    	 selectIndex = document.getElementById('selectoption').selectedIndex ;
+	     selectedValue = document.getElementById('selectoption').options[selectIndex].value;
+         $.ajax({
+            type: "GET",
+            url: $SCRIPT_ROOT + "/_update_reserved_demo/",
+            contentType: "application/xml; charset=utf-8",
+            data: { echoValue:selectedValue },
+            success: function(data) {
+//                $('#echoResult').text(data.value);
+					alert("success");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });    
+    });
+  });
+</script>
 <div class="page-header">
   <h1>Availabe Demos that are reserved by you</h1>
 </div>
@@ -15,20 +56,21 @@
 							Demo Set Name 
 						</td> 
 						<td style="background: #e2e4e7;">	
-							<select>
-								  <option value="volvo">Volvo</option>
-								  <option value="saab">Saab</option>
-								  <option value="mercedes">Mercedes</option>
-								  <option value="audi">Audi</option>
+							<select id="selectoption" >
+								  <option id="select_a_demo" >Select a Demo</option>
+								  {% for demo in  demo_details_names %}
+								  <option value={{demo.demo_name}} id={{demo.demo_name }}>{{demo.demo_name}}</option>
+								  {% endfor %}
 							</select> 	
 						</td>
 					</tr>
-					<tr>
+					<tr class="alt">
 						<td>
 							Description
 						</td>
 						<td>
-								<textarea rows="4" cols="50">This textarea will give you a brief detail of all the info of the devices 
+								<textarea rows="5" cols="80" readonly id="description_area" disabled >
+								Please select perticular demo name to get the details
 								</textarea>
 						</td>
 					</tr>
@@ -37,7 +79,8 @@
 							Device Details	
 						</td>
 						<td>
-								<textarea rows="4" cols="50">This textarea will give you a brief detail of all the info of the devices 
+								<textarea rows="5" cols="80" readonly id="device_details_area" disabled >
+								Please select perticular demo name to get the details
 								</textarea>
 						</td>
 					</tr>
