@@ -43,7 +43,7 @@
             </tr>
 		<tr class="alt" align="center">
 			<td colspan="2" >
-                <button type="button" class="social-button" >Submit</button>
+                <button type="button" class="social-button" id="free_reserve" >Submit</button>
 				
 			</td>
 		</tr>
@@ -83,6 +83,32 @@
            }
        });    
    });
+});
+
+
+$(document).ready(function() {
+   $("#free_reserve").click(function() {
+   if( $('#lab_reserve_status').is(':checked')){
+   	 selectIndex = document.getElementById('selectoption').selectedIndex ;
+        selectedValue = document.getElementById('selectoption').options[selectIndex].value;
+        $.ajax({
+           type: "GET",
+           url:"/free_reserved_demo/",
+           contentType: "application/xml; charset=utf-8",
+           data: { echoValue:selectedValue },
+           success: function(data) {
+			window.location='/about' 
+			alert('Successfully Reserved');
+           },
+           error: function(jqXHR, textStatus, errorThrown) {
+               alert(errorThrown);
+           }
+       });    
+  }else{
+		alert('please select the checkbox and then click yes');
+		return false;
+	}
+ });
 });
 </script>
 {% endblock %}

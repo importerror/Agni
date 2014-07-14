@@ -163,6 +163,25 @@ def reserve_the_demo():
 	g.db.close()	
 	flash("successfully added")
 	return render_template('pages/placeholder.home.html', session_status = {'session_status':"true"})
+
+@app.route('/free_reserved_demo/',methods = ['GET','POST'])
+def free_reserved_demo():
+	selectedvalue = request.args.get('echoValue')
+	username = session['user_id']
+	print selectedvalue 
+	print username  
+	g.db = connect_db()
+	g.db.execute('update demodetails set status=0 where demoname = ?',[selectedvalue])
+	g.db.execute('delete from demo_user_table where userid=? and demoname=?',[username,selectedvalue])
+	g.db.commit()
+	g.db.close()
+	flash('successfully deleted')
+	return render_template('pages/placeholder.home.html', session_status = {'session_status':"true"})
+		
+
+
+
+
 # Error handlers.
 
 
