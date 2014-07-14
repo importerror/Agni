@@ -155,14 +155,34 @@ def show_reserved_demo():
 def reserve_the_demo():
 	selectedvalue = request.args.get('selectedvalue')
 	username = session['user_id']
+	date_time = request.args.get('datevalue') 
 	g.db = connect_db()
-	g.db.execute('insert into demo_user_table (userid,demoname,demo_status) values (?,?,1)',[username,selectedvalue])
-	g.db.execute('insert into lab_history(userid,demoname,booked_time,status) values (?,?,CURRENT_DATE,1)',[username,selectedvalue])
+	g.db.execute('insert into demo_user_table (userid,demoname,demo_status,duration) values (?,?,1,?)',[username,selectedvalue,date_time])
+	g.db.execute('insert into lab_history(userid,demoname,booked_time,status) values (?,?,?,1)',[username,selectedvalue,date_time])
 	g.db.execute('update demodetails set status=1 where demoname = ?',[selectedvalue])
 	g.db.commit()
 	g.db.close()	
 	flash("successfully added")
 	return render_template('pages/placeholder.home.html', session_status = {'session_status':"true"})
+
+@app.route('/free_reserved_demo/',methods = ['GET','POST'])
+def free_reserved_demo():
+	selectedvalue = request.args.get('echoValue')
+	username = session['user_id']
+	print selectedvalue 
+	print username  
+	g.db = connect_db()
+	g.db.execute('update demodetails set status=0 where demoname = ?',[selectedvalue])
+	g.db.execute('delete from demo_user_table where userid=? and demoname=?',[username,selectedvalue])
+	g.db.commit()
+	g.db.close()
+	flash('successfully deleted')
+	return render_template('pages/placeholder.home.html', session_status = {'session_status':"true"})
+		
+
+
+
+
 # Error handlers.
 
 
