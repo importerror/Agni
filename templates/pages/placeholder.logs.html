@@ -6,7 +6,7 @@
 <div class="datagrid">
     <table class="datagrid" border="1" width="300px" height="100px" align="center">
         <thead>
-            <tr style="background:#e2e5e7;" height="20px" >
+            <tr style="background:#e2e5e7;" height="20px" class="alt">
                 <th>User</th>
                 <th>Demo Name</th>
                 <th>Status</th>
@@ -15,7 +15,7 @@
         </thead>
         <tbody>
             	{% for data in lab_history_details %}
-            <tr>
+            <tr class="alt">
                 <td>
 					{{ data.userid }}
                 </td>

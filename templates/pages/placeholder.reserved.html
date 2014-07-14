@@ -4,64 +4,85 @@
     <h1>Reserved Demos are shown here</h1>
 </div>
 
-
 <div class="datagrid">
     <table border="1" width="300px" class="datagrid">
-        <tr>
-            <td class="column-grid" style="color: #FFFFFF;">Demo Name :</td>
-            <td>
-                <select>
-                    <option value="volvo" onclick="sample()">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
-                </select>
-            </td>
+        <tr class = "alt">
+            <td class="column-grid"  style="background: #e2e4e7">Demo Name :</td>
+			<td style="background: #e2e4e7;">	
+				<select id="selectoption">
+					  <option id="select_a_demo" >Select a Demo</option>
+					  {% for demo in  reserve_details %}
+					  <option value={{demo.demo_name}} id={{demo.demo_name }}>{{demo.demo_name}}</option>
+					  {% endfor %}
+				</select> 	
+			</td>
         </tr>
-        <tr>
-            <td class="column-grid" style="color: #FFFFFF;">Description
+        <tr class = "alt">
+            <td class="column-grid" style="background: #e2e4e7">Description
             </td>
             <td>
-                <textarea rows="4" cols="50">This textarea will give you a brief detail of all the info of the devices
+                <textarea rows="4" cols="50" id="description_area" readonly disabled >
                 </textarea>
             </td>
         </tr>
-        <tr>
-            <td class="column-grid" style="color: #FFFFFF;">
+        <tr class="alt">
+            <td class="column-grid" style="background: #e2e4e7">
                 Device Details
             </td>
             <td>
-                <textarea rows="4" cols="50">this would show
-                    <IP :PORT>details
-                </textarea>
-            </td>
-            <tr>
-                <td class="column-grid" style="color: #FFFFFF;">
+                <textarea rows="4" cols="50" id="device_details_area" readonly disabled  ></textarea>
+            </td>	
+		</tr>
+            <tr class ="alt">
+                <td class="column-grid" style="background: #e2e4e7">
                     Do you want to free the Reservation ? Check yes and click submit
                 </td>
-                <td>
-                    <input type="checkbox" name="lab_reserve_status" value="Yes">Yes
+                <td style="background: #e2e4e7">
+                    <input type="checkbox" id="lab_reserve_status" value="Yes">Yes
                 </td>
             </tr>
-        </tr>
+		<tr class="alt" align="center">
+			<td colspan="2" >
+                <button type="button" class="social-button" >Submit</button>
+				
+			</td>
+		</tr>
     </table>
 </div>
 <div>
     <table>
         <tr>
             <td>
-                <button type="submit">Submit!</button>
-            </td>
-            <td>
-                <button type="submit">Cancel!</button>
             </td>
 
         </tr>
     </table>
 </div>
-<script type="text/javascript">
-function sample() {
-    alert("hi");
-}
+ <script type=text/javascript>
+ $(document).ready(function() {
+   $("#selectoption").change(function() {
+   	 selectIndex = document.getElementById('selectoption').selectedIndex ;
+        selectedValue = document.getElementById('selectoption').options[selectIndex].value;
+        $.ajax({
+           type: "GET",
+           url:"/show_reserved_demo/",
+           contentType: "application/xml; charset=utf-8",
+           data: { echoValue:selectedValue },
+           success: function(data) {
+				$('#description_area').val(data[0].description);
+				$('#device_details_area').val(data[0].device_details);
+				if (data[1].reserved_by_user == 'yes'){
+					$('#lab_reserve_status').removeAttr('disabled');
+	
+				}else{
+					$('#lab_reserve_status').attr('disabled',true);
+				}
+           },
+           error: function(jqXHR, textStatus, errorThrown) {
+               alert(errorThrown);
+           }
+       });    
+   });
+});
 </script>
 {% endblock %}
