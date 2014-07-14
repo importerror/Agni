@@ -7,7 +7,7 @@
 <div class="data-grid">
 <table class="datagrid">
 		<tr>
-			<td>
+			<td  style="background: #e2e4e7">
 				<table border="1"> 
 					<tr class="alt">
 						<td class="column-grid" style="background: #e2e4e7;"> 
@@ -46,8 +46,8 @@
 				</table>
 			
 			</td>
-			<td style="background: #e2e4e7" >		
-					Pictures There would be image coming here 
+			<td style="background: #e2e4e7">
+					<img src="static/img/cisco.jpg"  id="image_section" alt="Put Topology Pic here"  height="300" width="350">
 			</td>
 
 		</tr>
@@ -84,9 +84,11 @@ jQuery('#datetimepicker').datetimepicker();
            success: function(data) {
 				$('#description_area').val(data[0].description);
 				$('#device_details_area').val(data[0].device_details);
+				image_string = "/static/img/topology_".concat(selectedValue).concat(".jpg");
+				$('#image_section').attr('src',image_string);
+				alert(image_string);
 				if (data[0].demo_status == 1){
 					$('#demo_reserve').attr('disabled','disabled');
-	
 				}else{
 					$('#demo_reserve').removeAttr('disabled')
 				}
