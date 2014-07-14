@@ -155,9 +155,10 @@ def show_reserved_demo():
 def reserve_the_demo():
 	selectedvalue = request.args.get('selectedvalue')
 	username = session['user_id']
+	date_time = request.args.get('datevalue') 
 	g.db = connect_db()
-	g.db.execute('insert into demo_user_table (userid,demoname,demo_status) values (?,?,1)',[username,selectedvalue])
-	g.db.execute('insert into lab_history(userid,demoname,booked_time,status) values (?,?,CURRENT_DATE,1)',[username,selectedvalue])
+	g.db.execute('insert into demo_user_table (userid,demoname,demo_status,duration) values (?,?,1,?)',[username,selectedvalue,date_time])
+	g.db.execute('insert into lab_history(userid,demoname,booked_time,status) values (?,?,?,1)',[username,selectedvalue,date_time])
 	g.db.execute('update demodetails set status=1 where demoname = ?',[selectedvalue])
 	g.db.commit()
 	g.db.close()	

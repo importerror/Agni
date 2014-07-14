@@ -103,11 +103,12 @@ jQuery('#datetimepicker').datetimepicker();
 $(document).ready(function() {
    $('#demo_reserve').click(function(){
 		var value = $('#selectoption').val();
+		var date_select = $('#datetimepicker').val();
    	$.ajax({
 		type: "GET",
 		url:"/reserve_the_demo/",
 		contentType: "application/xml; charset =utf-8",
-		data : {selectedvalue:value }, 
+		data : {selectedvalue:value, datevalue:date_select}, 
 		success: function(data) {
 			window.location='/about' 
 			alert('Successfully Reserved');
