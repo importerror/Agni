@@ -14,7 +14,7 @@
 							Demo Set Name 
 						</td> 
 						<td style="background: #e2e4e7;">	
-							<select id="selectoption" >
+							<select id="selectoption">
 								  <option id="select_a_demo" >Select a Demo</option>
 								  {% for demo in  demo_details_names %}
 								  <option value={{demo.demo_name}} id={{demo.demo_name }}>{{demo.demo_name}}</option>
@@ -54,10 +54,8 @@
 		<tr>
 			<td>
 				
-					<button type="submit">Reserved !</button> 
-			</td>
-			<td>
-                <input id="datetimepicker" type="text" >
+					<button type="button" id="demo_reserve">Reserved</button> 
+                	<input id="datetimepicker" type="text" /> 
 			</td>
 		</tr>
 </table>
@@ -72,29 +70,53 @@
 		</tr>
 		  {%endfor%}
 </table>
-
  <script type=text/javascript>
-
 jQuery('#datetimepicker').datetimepicker();
  $(document).ready(function() {
    $("#selectoption").change(function() {
    	 selectIndex = document.getElementById('selectoption').selectedIndex ;
         selectedValue = document.getElementById('selectoption').options[selectIndex].value;
-		alert(selectedValue);
         $.ajax({
            type: "GET",
-           url:"/_update_reserved_demo/",
+           url:"/update_reserved_demo/",
            contentType: "application/xml; charset=utf-8",
            data: { echoValue:selectedValue },
            success: function(data) {
-//               $('#echoResult').text(data.value);
-   				alert("success");
+				$('#description_area').val(data[0].description);
+				$('#device_details_area').val(data[0].device_details);
+				if (data[0].demo_status == 1){
+					$('#demo_reserve').attr('disabled','disabled');
+	
+				}else{
+					$('#demo_reserve').removeAttr('disabled')
+				}
            },
            error: function(jqXHR, textStatus, errorThrown) {
                alert(errorThrown);
            }
        });    
    });
+});
+
+
+
+$(document).ready(function() {
+   $('#demo_reserve').click(function(){
+		var value = $('#selectoption').val();
+   	$.ajax({
+		type: "GET",
+		url:"/reserve_the_demo/",
+		contentType: "application/xml; charset =utf-8",
+		data : {selectedvalue:value }, 
+		success: function(data) {
+			window.location='/about' 
+			alert('Successfully Reserved');
+		},
+		error:function(jqXHR,textStatus,errorThrown){
+			alert(errorThrown);
+		}
+	});
   });
+});
 </script>
 {% endblock %}

@@ -62,6 +62,7 @@ def home():
 def logout():
     flash('You have been logged out successfully')
     session.pop('logged_in', None)
+    session.pop('user_id',None)
     return redirect(url_for('login',session_status = {'session_status':"false"}))
 
 @app.route('/about')
@@ -115,6 +116,7 @@ def authenticate():
 		connect.bind_s(user_dn,password)
 		result = connect.search_s(base_dn,ldap.SCOPE_SUBTREE,search_filter)
 		session['logged_in'] = True
+		session['user_id'] = username
 		return render_template('pages/placeholder.home.html', session_status = {'session_status':"true"})
 	except ldap.LDAPError:
 		connect.unbind_s()
@@ -122,16 +124,45 @@ def authenticate():
 		return redirect(url_for('login'))
 
 
-@app.route('/_update_reserved_demo',methods = ['GET','POST'])
+@app.route('/update_reserved_demo/',methods = ['GET','POST'])
 def update_reserved_demo():
- 	print "ho"
-   	demoname = request.args.get('demoname')
+   	demoname = request.args.get('echoValue')
 	g.db = connect_db()
-	cur = g.db.excute('select demoid,demoname,description,device_details,status from demodetails where demoname= ?',[demoname])
-	demo_sepcific_detail = [dict(demo_id=row[0],demo_name=row[1],description=row[2],status=row[4]) for row in cur.fetchall()]
-	return jsonify(demo_specific_detail)
+	cur = g.db.execute('select demoname,description,device_details,status from demodetails where demoname= ?',[demoname])
+	demo_specific_detail = [dict(demo_name=row[0],description=row[1],device_details=row[2],demo_status=row[3]) for row in cur.fetchall()]
+	return Response(json.dumps(demo_specific_detail),  mimetype='application/json')
 
 
+@app.route('/show_reserved_demo/',methods = ['GET','POST'])
+def show_reserved_demo():
+	current_status = False 
+   	demoname = request.args.get('echoValue')
+	g.db = connect_db()
+	username = session['user_id']
+	cur = g.db.execute('select demoname,description,device_details,status from demodetails where demoname= ?',[demoname])
+	demo_specific_detail = [dict(demo_name=row[0],description=row[1],device_details=row[2],demo_status=row[3]) for row in cur.fetchall()]
+	cur1 = g.db.execute('select demo_status from demo_user_table where userid=? AND demoname=?',[username,demoname])
+	for i in cur1.fetchall():
+		current_status = True
+		if i[0]==1:
+			demo_specific_detail.append({'reserved_by_user':'yes'})
+	if current_status == False:
+		demo_specific_detail.append({'reserved_by_user':'no'})
+	return Response(json.dumps(demo_specific_detail),  mimetype='application/json')
+
+
+@app.route('/reserve_the_demo/',methods = ['GET','POST'])
+def reserve_the_demo():
+	selectedvalue = request.args.get('selectedvalue')
+	username = session['user_id']
+	g.db = connect_db()
+	g.db.execute('insert into demo_user_table (userid,demoname,demo_status) values (?,?,1)',[username,selectedvalue])
+	g.db.execute('insert into lab_history(userid,demoname,booked_time,status) values (?,?,CURRENT_DATE,1)',[username,selectedvalue])
+	g.db.execute('update demodetails set status=1 where demoname = ?',[selectedvalue])
+	g.db.commit()
+	g.db.close()	
+	flash("successfully added")
+	return render_template('pages/placeholder.home.html', session_status = {'session_status':"true"})
 # Error handlers.
 
 
